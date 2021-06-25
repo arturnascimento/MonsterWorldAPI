@@ -1,16 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MonsterWorldApi.Data;
+using MonsterWorldApi.Services;
 
 namespace MonsterWorldApi
 {
@@ -32,6 +28,17 @@ namespace MonsterWorldApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MonsterWorldApi", Version = "v1" });
             });
+
+            #region Database Context
+            services.AddDbContext<MonsterWorldApiContext>(
+               options => options.UseSqlServer(Configuration.GetConnectionString("MonsterWorldApiConnectionString"))
+             );
+
+            #endregion
+
+            services.AddScoped<IMonsterService, SqlMonsterService>();
+            //services.AddScoped<IMonsterService, StaticMonsterService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

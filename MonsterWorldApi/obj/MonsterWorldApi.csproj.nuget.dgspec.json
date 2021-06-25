@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\Aula 6 - Codelabs Web API\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj": {}
+    "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\Aula 6 - Codelabs Web API\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj": {
+    "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\Aula 6 - Codelabs Web API\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj",
+        "projectUniqueName": "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj",
         "projectName": "MonsterWorldApi",
-        "projectPath": "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\Aula 6 - Codelabs Web API\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj",
+        "projectPath": "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\MonsterWorldApi\\MonsterWorldApi\\MonsterWorldApi.csproj",
         "packagesPath": "C:\\Users\\artur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\Aula 6 - Codelabs Web API\\MonsterWorldApi\\MonsterWorldApi\\obj\\",
+        "outputPath": "C:\\Users\\artur\\Desktop\\Blue\\modulo4backend\\MonsterWorldApi\\MonsterWorldApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,9 +44,31 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[5.6.3, )"
+              "version": "[6.1.4, )"
             }
           },
           "imports": [

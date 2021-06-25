@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MonsterWorldApi.Data;
 
 namespace MonsterWorldApi
 {
@@ -13,7 +9,18 @@ namespace MonsterWorldApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //aplicacao sendo montada para iniciar
+            var app = CreateHostBuilder(args).Build();
+            //enquanto eu estiver usando o escopo do app.services.createscope
+            using (var scope = app.Services.CreateScope())
+            {
+                //buscar o provedor de serviços dentro do escopo
+                var serviceProvider = scope.ServiceProvider;
+                //seed inicando junto com o banco de dados
+                SeedData.InitDatabase(serviceProvider);
+            }
+            //aplicacao vai comecar muhahaha
+            app.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

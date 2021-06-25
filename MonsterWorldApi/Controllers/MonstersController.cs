@@ -1,140 +1,56 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MonsterWorldApi.API;
 using MonsterWorldApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MonsterWorldApi.Services;
 
 namespace MonsterWorldApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MonstersController : ControllerBase
+    public class MonstersController : CommunicationsController
     {
-        // função allmonsters, cria os monstros e retorna uma lista do tipo monster
-        List<Monster> AllMonsters()
+        //chamando minha interface e o serviço
+        IMonsterService _service;
+        public MonstersController(IMonsterService service) //criando construtor para a controller utilizando serviço da interface como entrada
         {
-            //rnd foi um random pra gerar os atributos dos monstros
-            Random rnd = new Random();
-            //instanciando uma lista de Monster com o nome de monsters
-            List<Monster> monsters = new List<Monster>();
-
-            // Array de strings com os nomes dos monstros
-            string[] monsternames = new string[] { "Orc", "Troll", "Goblin", "Saci", "Curupira", "Cuca" };
-
-            //for que usei para que cada nome do array entre no nesse for
-            for (int i = 0; i < monsternames.Length; i++)
-            {
-               //fator de dificuldade do monstro
-                int DificultyFactor = 1;
-                //foreach q percorre o enum e criar os monstros
-                foreach (Dificulties dificulty in Enum.GetValues(typeof(Dificulties)))
-                {
-                    monsters.Add(new Monster
-                            {
-                                Id = monsters.Count + 1,
-                                Name = dificulty + " " + monsternames[i],
-                                HP = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor)*DificultyFactor,
-                                Experience = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor)*DificultyFactor,
-                                Attack = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor)*DificultyFactor,
-                                Dificulty = dificulty
-                            });
-                    DificultyFactor++;
-                        
-                }
-                 
-            }
-
-            return monsters;
+            _service = service;
         }
-
-
 
         [HttpPost] //Create
-        public IActionResult Create([FromBody] Monster monster)//metodo de criaçao com a annotation pra pegar a informação direto do body
-                                                                //pegando um objeto monster do tipo Monstro
-        {
-            // monsters recebe o retorno do metodo AllMonsters que é a lista de montros
-            var monsters = AllMonsters();
-
-            //exists recebe nome do monstro caso informado no objeto monster, caso já exista um Monstro de nome igual dentro da lista
-            //caso nao exista, a variável receberá o valor de null
-            var exists = monsters.FirstOrDefault(m => m.Name == monster.Name);
-            //se exists for nulo
-            if (exists == null)
-            {
-                //monsters chama o metodo add e adiciona o objeto monster a lista, retornando mensagem de sucesso
-                monsters.Add(monster);
-                //com a normalização o API response criado por meio da succeed true, message de sucesso e resultas = monster por isso APIResponse<Monster>
-                return Ok(new APIResponse<Monster>() { Succeed = true, Message = "Monstro criado com sucesso.", Results = monster});
-            }
-            //se exists nao for nulo
-            else
-            {
-                //o objeto ja existe e nao será criado e será retornado a msg de erro.
-                return NotFound(new APIResponse<string>() { Succeed = false, Message = "O Monstro informado já existe." });
-            }
-
-        }
-
+        public IActionResult Create([FromBody] Monster monster) => _service.Create(monster) ? ApiOk("Monstro brabo criado com sucesso.", monster) : ApiNotFound("Erro na criação do monstro.");
+        //funcao create pega os dados do body da requisição de um objeto monster do tipo Monstro, caso o montro nao exista será retornado mensagem de sucesso com o monstro criado, senao será retornado erro
         [HttpGet] //Read GetPadrao
-        // metodo List() recebe metodo OK contendo metodo AllMonsters
-        public IActionResult List() => Ok(new APIResponse<List<Monster>>() { Succeed = true, Results = AllMonsters() });
-
+        public IActionResult List() => ApiOk(_service.Get());//get padrao que pega a lista de monstros inteira
 
         [HttpGet]//Get por Id
         [Route("{id}")]//Adicionada a rota com o Id obrigatorio
-
-        public IActionResult Get(int? id)
+        public IActionResult Get(int id)//get por id que chama o metodo get com o id obrigatório
         {
-            // monsters recebe o retorno do metodo AllMonsters que é a lista de monstros
-            var monsters = AllMonsters();
+            var exists = _service.Get(id); //variavel recebe objeto retornado caso ele exista, se nao existir var recebe null
+            return exists != null ?
+                ApiOk(exists) :
+                ApiNotFound("Monstro não existe");
+        }
 
-            //exists recebe objeto, caso já exista um monstro de id igual dentro da lista comparando os ids da lista com o id recebido no metodo
-            //caso id nao exista, a variável receberá o valor de null
-            var exists = monsters.FirstOrDefault(m => m.Id == id);
-            // se exists receber null entao retorna o notfound senão retorna o Ok
-            return exists == null ?
-                NotFound(new APIResponse<string>() { Succeed = false, Message = "O Monstro não existe." }) :
-                Ok(new APIResponse<Monster>() { Succeed = true, Results = exists });
-
+        [HttpGet]//Get por dificult
+        [Route("level/{dificulty}")]//Adicionada a rota /level/dificulty pq apesar de nao testar pensei que fosse ter conflito entre o get por id
+        public IActionResult Get(Dificulties dificulty)//parecido com o get por id, porém temos que passar o numero relativo a dificuldade do monstro que vc deseja de forma aleatoria
+        {
+            var exists = _service.Get(dificulty); //var exists recebe valor do metodo get com dificuldade como parametro
+            return exists != null ? // se exists for diferente de null retorna ok, se nao retorna o erro
+                ApiOk(exists) :
+                ApiNotFound("Monstro não existe");
         }
 
         [HttpPut] //update
         [Route("{id}")]
-        public IActionResult Update([FromBody] Monster monster)// pega as informações direto do body por causa da annotation, metodo recebe um objeto monster do tipo Monstro
-        {
-            // monsters recebe o retorno do metodo AllMonsters que é a lista de monstros
-            var monsters = AllMonsters();
-
-            //exists recebe objeto, caso id informado no como entrada do metodo já exista dentro da lista
-            //caso id nao exista, a variável receberá o valor de null
-            var exists = monsters.FirstOrDefault(m => m.Id == monster.Id);
-            // se exists receber null entao retorna o notfound senão retorna o Ok
-            return exists == null ?
-                NotFound(new APIResponse<string>() { Succeed = false, Message = "O Monstro não existe." }) :
-                Ok(new APIResponse<Monster>() { Succeed = true, Message = "Monstro atualizado com sucesso.", Results = monster });
-
-        }
+        // pega as informações direto do body por causa da annotation, metodo recebe um objeto monster do tipo Monstro e faz a busca pelo ID da rota
+        public IActionResult Update([FromBody] Monster monster) => _service.Update(monster) ? ApiOk("Monstro foi atualizado", monster) : ApiNotFound("Erro ao atualizar o monstro");
 
         [HttpDelete] //delete
         [Route("{id}")]
+        public IActionResult Delete(int id) => _service.Delete(id) ? ApiOk("Monstro deletado") : ApiNotFound("Monstro não existe");
 
-        public IActionResult Delete(int? id)
-        {
-            // monsters recebe o retorno do metodo AllMonsters que é a lista de monstros
-            var monsters = AllMonsters();
-
-            //exists recebe monstro de id igual ao informado por parametro, caso já exista na lista
-            //caso id nao exista, a variável receberá o valor de null
-            var exists = monsters.FirstOrDefault(m => m.Id == id);
-            // se exists receber null entao retorna o notfound senão retorna o Ok
-            return exists == null ?
-                NotFound(new APIResponse<string>() { Succeed = false, Message = "O Monstro não existe." }) :
-                Ok(new APIResponse<string>() { Succeed = true, Message = "O Monstro foi deletado com sucesso." });
-
-        }
 
 
     }
