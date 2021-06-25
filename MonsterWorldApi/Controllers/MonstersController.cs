@@ -43,8 +43,7 @@ namespace MonsterWorldApi.Controllers
         }
 
         [HttpPut] //update
-        [Route("{id}")]
-        // pega as informações direto do body por causa da annotation, metodo recebe um objeto monster do tipo Monstro e faz a busca pelo ID da rota
+        // pega as informações direto do body por causa da annotation, metodo recebe um objeto monster do tipo Monstro
         public IActionResult Update([FromBody] Monster monster) => _service.Update(monster) ? ApiOk("Monstro foi atualizado", monster) : ApiNotFound("Erro ao atualizar o monstro");
 
         [HttpDelete] //delete
