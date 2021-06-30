@@ -9,8 +9,9 @@ namespace MonsterWorldApi.Controllers
         protected IActionResult ApiOk<T>(T Results) => Ok(CustomResponse(true, "", Results));
         protected IActionResult ApiOk<T>(string Message, T Results) => Ok(CustomResponse(true, Message, Results));
         protected IActionResult ApiNotFound(string Message) => NotFound(CustomResponse(false, Message, ""));
+        protected IActionResult ApiBadRequest<T>(T Results) => BadRequest(CustomResponse(false, "", Results));
 
-        APIResponse<T> CustomResponse<T>(bool Succeed, string Message, T Results)
+        APIResponse<T> CustomResponse<T>(bool Succeed = true, string Message = "", T Results = default)
         {
             return new APIResponse<T>()
             {

@@ -11,3 +11,4 @@ namespace MonsterWorldApi.API
         Nightmare = 6,
     }
 }
+//enum de dificuldades dos monstros

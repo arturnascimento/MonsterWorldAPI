@@ -9,6 +9,6 @@ namespace MonsterWorldApi.Data
     {
         public MonsterWorldApiContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Monster> Monster { get; set; }
+        public DbSet<Monster> Monster { get; set; } //banco de dados recebe Monster do tipo Monster
     }
 }

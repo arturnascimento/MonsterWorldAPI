@@ -10,6 +10,8 @@ namespace MonsterWorldApi.Models
         public int Experience { get; set; }
         public int Attack { get; set; }
         public Dificulties Dificulty { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
 
     }
 }

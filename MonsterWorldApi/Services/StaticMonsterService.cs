@@ -34,7 +34,10 @@ namespace MonsterWorldApi.Services
                         HP = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor) * DificultyFactor,
                         Experience = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor) * DificultyFactor,
                         Attack = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor) * DificultyFactor,
-                        Dificulty = dificulty
+                        Dificulty = dificulty,
+                        CreatedBy = "System",
+                        UpdatedBy = default
+
                     });
                     DificultyFactor++;
                 }

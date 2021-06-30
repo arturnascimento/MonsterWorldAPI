@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using MonsterWorldApi.API;
 using MonsterWorldApi.Models;
 using MonsterWorldApi.Services;
@@ -6,7 +8,7 @@ using MonsterWorldApi.Services;
 namespace MonsterWorldApi.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize] //para acessar essa controller o usuario deverá estar logado.
     public class MonstersController : CommunicationsController
     {
         //chamando minha interface e o serviço
@@ -16,8 +18,19 @@ namespace MonsterWorldApi.Controllers
             _service = service;
         }
 
+        
         [HttpPost] //Create
-        public IActionResult Create([FromBody] Monster monster) => _service.Create(monster) ? ApiOk("Monstro brabo criado com sucesso.", monster) : ApiNotFound("Erro na criação do monstro.");
+        public IActionResult Create([FromBody] Monster monster)
+        {
+            monster.CreatedBy = User.Identity.Name; //quando o usuario criar um monstro, vai aparecer o nome dele no campo CreatedBy
+
+            if (_service.Create(monster))
+            {
+                return ApiOk("Monstro foi Criado", monster);
+            }
+
+            return ApiNotFound("Erro ao criar o monstro.");
+        }
         //funcao create pega os dados do body da requisição de um objeto monster do tipo Monstro, caso o montro nao exista será retornado mensagem de sucesso com o monstro criado, senao será retornado erro
         [HttpGet] //Read GetPadrao
         public IActionResult List() => ApiOk(_service.Get());//get padrao que pega a lista de monstros inteira
@@ -42,11 +55,22 @@ namespace MonsterWorldApi.Controllers
                 ApiNotFound("Monstro não existe");
         }
 
-        [HttpPut] //update
+        
+        [HttpPut]//update
         // pega as informações direto do body por causa da annotation, metodo recebe um objeto monster do tipo Monstro
-        public IActionResult Update([FromBody] Monster monster) => _service.Update(monster) ? ApiOk("Monstro foi atualizado", monster) : ApiNotFound("Erro ao atualizar o monstro");
+        public IActionResult Update([FromBody] Monster monster) 
+        {
+            monster.UpdatedBy = User.Identity.Name; //quando o usuario fizer uptade em um monstro vai aparecer o nome dele no campo updatedBy
+            if (_service.Update(monster))
+            {
+                return ApiOk("Monstro foi atualizado", monster);
+            }
+
+            return ApiNotFound("Erro ao atualizar o monstro");
+        } 
 
         [HttpDelete] //delete
+        [RoleAuthorization(RoleTypes.Admin)] //somente usuarios pertencentes ao grupo Admin poderão deletar um monstro
         [Route("{id}")]
         public IActionResult Delete(int id) => _service.Delete(id) ? ApiOk("Monstro deletado") : ApiNotFound("Monstro não existe");
 

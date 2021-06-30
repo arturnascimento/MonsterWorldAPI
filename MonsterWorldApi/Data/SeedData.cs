@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MonsterWorldApi.API;
 using MonsterWorldApi.Models;
@@ -43,12 +44,26 @@ namespace MonsterWorldApi.Data
                                 HP = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor) * DificultyFactor,
                                 Experience = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor) * DificultyFactor,
                                 Attack = rnd.Next(1 + DificultyFactor, 11 + DificultyFactor) * DificultyFactor,
-                                Dificulty = dificulty
+                                Dificulty = dificulty,
+                                CreatedBy = "System",
+                                UpdatedBy = default
                             });
                             DificultyFactor++;
                         }
                     }
                     context.SaveChanges();
+
+                    var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                    string[] roleNames = Enum.GetNames(typeof(RoleTypes));
+
+                    foreach(var role in roleNames)
+                    {
+                        if (!RoleManager.RoleExistsAsync(role).Result)
+                        {
+                            RoleManager.CreateAsync(new IdentityRole { Name = role }).Wait();
+                        }
+                    }
+                    //toda vez que meu banco estiver zerado o seed irá criar novos monstros e as roles, fazendo migrate automaticamente
                 }
   
             }

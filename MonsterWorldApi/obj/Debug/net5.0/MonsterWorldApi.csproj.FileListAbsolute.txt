@@ -56,7 +56,6 @@ C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\D
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Microsoft.OpenApi.dll
-C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -93,3 +92,8 @@ C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\obj\D
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\obj\Debug\net5.0\ref\MonsterWorldApi.dll
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\obj\Debug\net5.0\MonsterWorldApi.pdb
 C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\obj\Debug\net5.0\MonsterWorldApi.genruntimeconfig.cache
+C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\MonsterWorldApi.StaticWebAssets.xml
+C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
+C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\artur\Desktop\Blue\modulo4backend\MonsterWorldApi\MonsterWorldApi\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

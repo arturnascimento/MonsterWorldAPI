@@ -9,8 +9,8 @@ namespace MonsterWorldApi.Services
 {
     public class SqlMonsterService : IMonsterService
     {
-
-        MonsterWorldApiContext _context;
+        //injecao de dependencia
+        MonsterWorldApiContext _context; 
         public SqlMonsterService(MonsterWorldApiContext context)//construtor do serviço com contexto do banco de dados
         {
             _context = context;

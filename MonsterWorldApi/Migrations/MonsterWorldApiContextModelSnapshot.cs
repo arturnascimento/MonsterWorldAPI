@@ -225,6 +225,9 @@ namespace MonsterWorldApi.Migrations
                     b.Property<int>("Attack")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Dificulty")
                         .HasColumnType("int");
 
@@ -235,6 +238,9 @@ namespace MonsterWorldApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
