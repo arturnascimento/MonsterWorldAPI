@@ -12,10 +12,21 @@ using System.Threading.Tasks;
 
 namespace MonsterWorldApi.API
 {
+    /// <summary>
+    /// Classe descontinuada, agora a API utiliza Token Jwt para segurança.
+    /// </summary>
     public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         //injecao de dependencia 
         AuthService _authService;
+        /// <summary>
+        /// Construtor da classe de autenticação básica.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="logger"></param>
+        /// <param name="encoder"></param>
+        /// <param name="clock"></param>
+        /// <param name="authService"></param>
         public BasicAuthHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options, //construtor da classe
             ILoggerFactory logger,
@@ -26,6 +37,10 @@ namespace MonsterWorldApi.API
         {
             _authService = authService;
         }
+        /// <summary>
+        /// Método para autenticação de usuário cadastrado.
+        /// </summary>
+        /// <returns></returns>
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             try

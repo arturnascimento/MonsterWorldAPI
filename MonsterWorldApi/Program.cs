@@ -5,8 +5,15 @@ using MonsterWorldApi.Data;
 
 namespace MonsterWorldApi
 {
+    /// <summary>
+    /// Classe que principal do programa, que chama a iniciação.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Método que Builda a aplicação e chama o SeedData.
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             //aplicacao sendo montada para iniciar
@@ -23,6 +30,11 @@ namespace MonsterWorldApi
             app.Run();
         }
 
+        /// <summary>
+        /// Método que builda a aplicação e chama a StartUp.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

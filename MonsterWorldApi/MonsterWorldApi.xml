@@ -1,0 +1,741 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MonsterWorldApi</name>
+    </assembly>
+    <members>
+        <member name="T:MonsterWorldApi.API.BasicAuthHandler">
+            <summary>
+            Classe descontinuada, agora a API utiliza Token Jwt para segurança.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.API.BasicAuthHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock,MonsterWorldApi.Services.AuthService)">
+            <summary>
+            Construtor da classe de autenticação básica.
+            </summary>
+            <param name="options"></param>
+            <param name="logger"></param>
+            <param name="encoder"></param>
+            <param name="clock"></param>
+            <param name="authService"></param>
+        </member>
+        <member name="M:MonsterWorldApi.API.BasicAuthHandler.HandleAuthenticateAsync">
+            <summary>
+            Método para autenticação de usuário cadastrado.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.API.Dificulties">
+            <summary>
+            Enum responsável pelos níveis de dificuldade dos monstros da API.
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.Dificulties.Sandbox">
+            <summary>
+            Dificuldade 1
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.Dificulties.Easy">
+            <summary>
+            Dificuldade 2
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.Dificulties.Normal">
+            <summary>
+            Dificuldade 3
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.Dificulties.Hard">
+            <summary>
+            Dificuldade 4
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.Dificulties.Extreme">
+            <summary>
+            Dificuldade 5
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.Dificulties.Nightmare">
+            <summary>
+            Dificuldade 6
+            </summary>
+        </member>
+        <member name="T:MonsterWorldApi.API.RoleAuthorizationAttribute">
+            <summary>
+            Classe responsável por retornar o Enum RoleTypes em forma de array de strings.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.API.RoleAuthorizationAttribute.#ctor(MonsterWorldApi.API.RoleTypes[])">
+            <summary>
+            Método responsável por retornar as roles em um array de strings.
+            </summary>
+            <param name="r"></param>
+        </member>
+        <member name="T:MonsterWorldApi.API.RoleTypes">
+            <summary>
+            Enum responsável pelos tipos de roles dos usuários da API.
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.RoleTypes.Common">
+            <summary>
+            Role de usuário Common
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.API.RoleTypes.Admin">
+            <summary>
+            Role de usuário Admin
+            </summary>
+        </member>
+        <member name="T:MonsterWorldApi.Controllers.v1.AuthController">
+            <summary>
+            Controller para Autenticação
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.AuthController.#ctor(MonsterWorldApi.Services.AuthService,Microsoft.Extensions.Logging.ILogger{MonsterWorldApi.Controllers.v1.AuthController})">
+            <summary>
+            Construtor da classe AuthController
+            </summary>
+            <param name="authService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.AuthController.Register(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Endpoint responsável pelo cadastro de novos usuários da API, os dados mínimos que deverão ser informados são, Username, Email e PasswordHash.
+            Por padrão todos os usuários criados pertencem a Role Common não possuindo nível de administrador.
+            </summary>
+            <param name="identityUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.AuthController.Token(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Endpoint responsável por gerar um token de segurança para um usuário registrado na API.
+            </summary>
+            <param name="identityUser"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Controllers.v1.CommunicationsController">
+            <summary>
+            Controller responsável pelos retornos de requisições da API.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.CommunicationsController.ApiOk``1(``0)">
+            <summary>
+            Retorno positivo customizado.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Results"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.CommunicationsController.ApiOk``1(System.String,``0)">
+            <summary>
+            Retorno positivo customizado.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Message"></param>
+            <param name="Results"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.CommunicationsController.ApiNotFound``1(System.String)">
+            <summary>
+            Resposta de negativa  de página nao encontrada.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.CommunicationsController.ApiBadRequest``1(``0)">
+            <summary>
+            Resposta negativa de uma requisição sem sucesso.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Results"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Controllers.v1.MonstersController">
+            <summary>
+            Controller responsável por gerenciar os endpoints dos monstros.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.#ctor(MonsterWorldApi.Services.IMonsterService,Microsoft.Extensions.Logging.ILogger{MonsterWorldApi.Controllers.v1.MonstersController})">
+            <summary>
+            Construtor do MonstersController
+            </summary>
+            <param name="service">Serviço utilizado para gerenciar os monstros.</param>
+            <param name="logger">Serviço utilizado para gerar os Logs da API.</param>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.Create(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Endpoint responsável pela criação de um novo Monstro.
+            </summary>
+            <param name="monster"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.List">
+            <summary>
+            Endpoint responsável por retornar uma lista contendo todos os monstros cadastrados até o momento.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.Get(System.Int32)">
+            <summary>
+            Endpoint responsável por retornar um determinado monstro, portanto o usuário deverá informar o Id do monstro desejado.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.Get(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Endpoint responsável pelo retorno de um monstro aleatório, o usuário deverá informar a dificuldade desejada.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.Update(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Endpoint responsável por editar um monstro cadastrado.
+            </summary>
+            <param name="monster"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.Delete(System.Int32)">
+            <summary>
+            Endpoint responsável pela exclusão de um monstro cadastrado, para deletar um monstro o usuário deverá ser do tipo Admin e informar o Id do monstro a ser deletado.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v1.MonstersController.GetFromRole(System.String)">
+            <summary>
+            Endpoint responsável por retornar uma lista de monstros criada por determinada Role, o usuário deverá informar a Role desejada.
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Controllers.v2.AuthController">
+            <summary>
+            Controle V2 de autenticação.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.AuthController.#ctor(MonsterWorldApi.Services.AuthService,Microsoft.Extensions.Logging.ILogger{MonsterWorldApi.Controllers.v2.AuthController})">
+            <summary>
+            Contrutor da Controller.
+            </summary>
+            <param name="authService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.AuthController.Register(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Endpoint responsável pelo cadastro de novos usuários da API, os dados mínimos que deverão ser informados são, Username, Email e PasswordHash.
+            Por padrão todos os usuários criados pertencem a Role Common não possuindo nível de administrador.
+            </summary>
+            <param name="identityUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.AuthController.Token(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Endpoint responsável por gerar um token de segurança para um usuário registrado na API.
+            </summary>
+            <param name="identityUser"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Controllers.v2.CommunicationsController">
+            <summary>
+            Controller responsável pelos retornos de requisições da API.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.CommunicationsController.ApiOk``1(``0)">
+            <summary>
+            Retorno positivo customizado.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Results"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.CommunicationsController.ApiOk``1(System.String,``0)">
+            <summary>
+            Retorno positivo customizado.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Message"></param>
+            <param name="Results"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.CommunicationsController.ApiNotFound``1(System.String)">
+            <summary>
+            Resposta de negativa  de página nao encontrada.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.CommunicationsController.ApiBadRequest``1(``0)">
+            <summary>
+            Resposta negativa de uma requisição sem sucesso.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="Results"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Controllers.v2.MonstersController">
+            <summary>
+            Classe para gerenciar os endpoints dos monstros.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.#ctor(MonsterWorldApi.Services.IMonsterService,Microsoft.Extensions.Logging.ILogger{MonsterWorldApi.Controllers.v2.MonstersController})">
+            <summary>
+            Construtor do MonstersController
+            </summary>
+            <param name="service">Serviço utilizado para gerenciar os monstros.</param>
+            <param name="logger">Serviço utilizado para gerar os Logs da API.</param>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.Create(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Endpoint responsável pela criação de um novo Monstro.
+            </summary>
+            <param name="monster"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.List">
+            <summary>
+            Endpoint responsável por retornar uma lista contendo todos os monstros cadastrados até o momento.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.Get(System.Int32)">
+            <summary>
+            Endpoint responsável por retornar um determinado monstro, portanto o usuário deverá informar o Id do monstro desejado.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.Get(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Endpoint responsável pelo retorno de um monstro aleatório, o usuário deverá informar a dificuldade desejada.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.Update(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Endpoint responsável por editar um monstro cadastrado.
+            </summary>
+            <param name="monster"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.Delete(System.Int32)">
+            <summary>
+            Endpoint responsável pela exclusão de um monstro cadastrado, para deletar um monstro o usuário deverá ser do tipo Admin e informar o Id do monstro a ser deletado.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.GetFromRole(System.String)">
+            <summary>
+            Endpoint responsável por retornar uma lista de monstros criada por determinada Role, o usuário deverá informar a Role desejada.
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Controllers.v2.MonstersController.GetFight(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Endpoint responsável pelo retorno de um monstro aleatório, o usuário deverá informar a dificuldade desejada.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Data.MonsterWorldApiContext">
+            <summary>
+            Classe responsável por Gerenciar o que pode ser salvo no banco de dados.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Data.MonsterWorldApiContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Construtor da classe.
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:MonsterWorldApi.Data.MonsterWorldApiContext.Monster">
+            <summary>
+            Dados que vão para o banco de dados.
+            </summary>
+        </member>
+        <member name="T:MonsterWorldApi.Data.SeedData">
+            <summary>
+            Classe responsável para que a aplicação nunca inicie sem dados no banco de dados.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Data.SeedData.InitDatabase(System.IServiceProvider)">
+            <summary>
+            Método para iniciar o banco de dados com dados, principalmente para testes.
+            </summary>
+            <param name="serviceProvider"></param>
+        </member>
+        <member name="T:MonsterWorldApi.GroupingByNamespaceConvention">
+            <summary>
+            Classe que gerencia as versões
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.GroupingByNamespaceConvention.Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ControllerModel)">
+            <summary>
+            Método que pega a versão do namespace da controller e adiciona a controller no grupo certo.
+            </summary>
+            <param name="controller"></param>
+        </member>
+        <member name="T:MonsterWorldApi.Migrations.inicial">
+            <summary>
+            migration
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Migrations.inicial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            migration
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:MonsterWorldApi.Migrations.inicial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            migration
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="T:MonsterWorldApi.Models.APIResponse`1">
+            <summary>
+            Classe modelo para padronizar as respostas da API.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:MonsterWorldApi.Models.APIResponse`1.Succeed">
+            <summary>
+            Atributo tipo bool 
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.APIResponse`1.Message">
+            <summary>
+            Atributo tipo string
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.APIResponse`1.Results">
+            <summary>
+            Atributo tipo T
+            </summary>
+        </member>
+        <member name="T:MonsterWorldApi.Models.Monster">
+            <summary>
+            Classe Modelo dos atributos de um objeto do tipo Monster.
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.Id">
+            <summary>
+            Id do monstro
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.Name">
+            <summary>
+            Nome do monstro
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.HP">
+            <summary>
+            Hp do monstro
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.Experience">
+            <summary>
+            Experiencia do monstro
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.Attack">
+            <summary>
+            Attack do monstro
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.Dificulty">
+            <summary>
+            Dificuldado do monstro do tipo enum
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.CreatedBy">
+            <summary>
+            Usuário que criou o monstro, e caso o seed tenha criado, vem como "System"
+            </summary>
+        </member>
+        <member name="P:MonsterWorldApi.Models.Monster.UpdatedBy">
+            <summary>
+            Usuário que fez o update no monstro.
+            </summary>
+        </member>
+        <member name="T:MonsterWorldApi.Program">
+            <summary>
+            Classe que principal do programa, que chama a iniciação.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Program.Main(System.String[])">
+            <summary>
+            Método que Builda a aplicação e chama o SeedData.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:MonsterWorldApi.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Método que builda a aplicação e chama a StartUp.
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Services.AuthService">
+            <summary>
+            Serviço que gerencia a parte de autenticação (Token Jwt) da API.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Services.AuthService.#ctor(Microsoft.AspNetCore.Identity.UserManager{Microsoft.AspNetCore.Identity.IdentityUser},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Logging.ILogger{MonsterWorldApi.Services.AuthService})">
+            <summary>
+            Construtor da classe AuthService
+            </summary>
+            <param name="userManager"></param>
+            <param name="configuration"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:MonsterWorldApi.Services.AuthService.Create(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Método para criação de um novo usuário.
+            </summary>
+            <param name="identityUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.AuthService.isValidLogin(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Método responsável por validar se o usuário está mesmo cadastrado e a qual role ele pertence.
+            </summary>
+            <param name="identityUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.AuthService.GenerateToken(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Método responsável pela geração dos Tokens para os usuários que passarem pela validação, a role é determinante para algumas permissões.
+            </summary>
+            <param name="identityUser"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Services.IMonsterService">
+            <summary>
+            Interface que contém os métodos do CRUD dos Monstros.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.Create(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Método da interface para criação de um novo monstro.
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.Delete(System.Int32)">
+            <summary>
+            Método da interface para exclusão de um monstro, com o Id como parâmetro.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.Get">
+            <summary>
+            Método da interface que retorna a lista completa de monstros cadastrados.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.Get(System.Int32)">
+            <summary>
+            Método da interface que retorna um monstro tendo seu Id como parâmetro.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.Get(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Método da interface que retorna monstro com sua dificuldade como parâmetro.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.Update(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Método da interface que realiza edição no monstro informado pelo usuário através do Id.
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.Get(System.String)">
+            <summary>
+            Método da interface que retorna uma lista de monstros que tem a role do usuário que o criou como parâmetro.
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.IMonsterService.GetFight(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Get especial para gerar um duelo entre 2 montros de mesma dificuldade.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Services.SqlMonsterService">
+            <summary>
+            Serviço responsável por gerenciar os monstros e salvar as informações no banco de dados.
+            </summary>
+        </member>
+        <member name="F:MonsterWorldApi.Services.SqlMonsterService.monstrinhos">
+            <summary>
+            lista utilizada na batalha de monstros.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.#ctor(MonsterWorldApi.Data.MonsterWorldApiContext,Microsoft.Extensions.Logging.ILogger{MonsterWorldApi.Services.SqlMonsterService})">
+            <summary>
+            Construtor da classe SqlMonsterService
+            </summary>
+            <param name="context"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.Create(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Método responsável por criar um monstro e salvar no banco de dados
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.Delete(System.Int32)">
+            <summary>
+            Método responsável por deletar um monstro do banco de dados, caso ele exista.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.Get(System.String)">
+            <summary>
+            Método responsável por consultar no banco de dados uma lista de monstros por role de criação, onde foi implementada esta Query para obtenção dos resultados esperados.
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.Get">
+            <summary>
+            Método responsável por retornar a lista de monstros existente no banco de dados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.Get(System.Int32)">
+            <summary>
+            Método responsável por retornar um determinado monstro existente no banco de dados.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.Get(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Método que retorna um monstro aletório do banco de dados de uma determinada dificuldade.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.Update(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Método responsável pelo update de um monstro do banco de dados e salvar as informações alteradas no banco de dados.
+            </summary>
+            <param name="monster"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.SqlMonsterService.GetFight(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Método que retorna 2 monstros aleatórios de mesma dificuldade e repete o retorno do vencedor do duelo em uma lista de monstros.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Services.StaticMonsterService">
+            <summary>
+            Serviço estático que foi utilizado no começo do desenvolvimento da API.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.Get">
+            <summary>
+            Método que busca a lista de monstros estática.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.Get(System.Int32)">
+            <summary>
+            Método que busca um monstro por Id na lista estática.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.Get(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Método que busca um monstro pelo nivel de dificuldade retornando um monstro aleatório, monstro da lista estática.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.Create(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Método de criação de monstro na lista estática.
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.Update(MonsterWorldApi.Models.Monster)">
+            <summary>
+            Método que realiza update em um monstro na lista estática.
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.Delete(System.Int32)">
+            <summary>
+            Método que exclui da lista estática um monstro escolhido pelo seu Id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.Get(System.String)">
+            <summary>
+            Método pertence a interface porém não é utilizado para lista estática.
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MonsterWorldApi.Services.StaticMonsterService.GetFight(MonsterWorldApi.API.Dificulties)">
+            <summary>
+            Método implementado pela inteface, porém nao é utilizado nesta classe descontinuada.
+            </summary>
+            <param name="dificulty"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MonsterWorldApi.Startup">
+            <summary>
+            Classe que inicia a aplicação.
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Construtor da classe startup.
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:MonsterWorldApi.Startup.Configuration">
+            <summary>
+            Configurações
+            </summary>
+        </member>
+        <member name="M:MonsterWorldApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método que recebe os serviços da applicação.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:MonsterWorldApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Método usado para configurar as requisições HTTP
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>

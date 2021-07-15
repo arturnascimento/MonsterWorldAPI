@@ -9,8 +9,15 @@ using System.Linq;
 
 namespace MonsterWorldApi.Data
 {
+    /// <summary>
+    /// Classe responsável para que a aplicação nunca inicie sem dados no banco de dados.
+    /// </summary>
     public class SeedData
     {
+        /// <summary>
+        /// Método para iniciar o banco de dados com dados, principalmente para testes.
+        /// </summary>
+        /// <param name="serviceProvider"></param>
         public static void InitDatabase(IServiceProvider serviceProvider)
         {
             //usando esse context de forma temporária no seed para nao ocupar espaco em memoria apos o termino do using
@@ -47,6 +54,7 @@ namespace MonsterWorldApi.Data
                                 Dificulty = dificulty,
                                 CreatedBy = "System",
                                 UpdatedBy = default
+                                
                             });
                             DificultyFactor++;
                         }

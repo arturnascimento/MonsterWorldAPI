@@ -13,6 +13,7 @@ namespace MonsterWorldApi.Migrations
     [Migration("20210624224817_inicial")]
     partial class inicial
     {
+
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
